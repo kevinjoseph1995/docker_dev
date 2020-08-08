@@ -5,6 +5,5 @@ if [ $ARCH != "x86_64" ]; then
     exit 1
 fi  
 
-containerName="sys-container"
+containerName="dev-${USER}"
 docker start $containerName
-docker exec -it -e COLUMNS=$(tput cols) -e LINES=$(tput lines) $containerName bash

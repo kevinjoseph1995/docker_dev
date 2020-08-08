@@ -1,15 +1,13 @@
 #!/bin/bash
 
-#Verdant docker development environment
-
-imageName="sys"
+imageName="dev-${USER}"
 
 echo "Running docker build"
 
 USERID=$(id -u)
 
 docker build -t $imageName - << EOF
-FROM system
+FROM dev
 
 RUN useradd -ms /bin/bash $USER -u $USERID
 ARG DEBIAN_FRONTEND=noninteractive

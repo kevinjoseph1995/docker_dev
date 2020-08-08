@@ -1,0 +1,22 @@
+FROM base
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get -y update && apt-get install unzip 
+
+# LLVM/Clang
+
+RUN apt-get -y install clang-10 lldb-10 lld-10
+
+#Std Lib
+
+RUN apt-get -y install libc++-10-dev libc++abi-10-dev
+
+# GDB 
+
+RUN apt-get -y install gdb
+
+#  Minimalistic image library
+COPY external-deps/CImg_latest.zip .
+RUN unzip CImg_latest.zip && cp CImg-2.9.2_pre072920/CImg.h /usr/local/include && \
+    rm -rf CImg*

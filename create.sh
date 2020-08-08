@@ -1,7 +1,7 @@
 #!/bin/bash
 
-containerName="sys-container"
-imageName="sys"
+containerName="dev-${USER}"
+imageName="dev-${USER}"
 
 echo "Running docker create"
 
@@ -23,5 +23,6 @@ docker create -it --runtime=nvidia \
          -v $HOME/.bash_history:$HOME/.bash_history \
          -v /tmp/.X11-unix:/tmp/.X11-unix \
          -e DISPLAY=$DISPLAY \
+         -e XAUTHORITY \
          -e CONTAINER_NAME=$containerName \
          -h $containerName $imageName

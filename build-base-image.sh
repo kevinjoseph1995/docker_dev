@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -f DockerfileSys -t system .
+docker build -f Dockerfile.Base -t base .
