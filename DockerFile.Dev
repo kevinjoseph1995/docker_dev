@@ -16,6 +16,13 @@ RUN apt-get -y install libc++-10-dev libc++abi-10-dev
 
 RUN apt-get -y install gdb
 
+#Cmake 
+
+COPY external-deps/cmake-3.18.1-Linux-x86_64.tar.gz .
+RUN tar -xvf cmake-3.18.1-Linux-x86_64.tar.gz && rm cmake-3.18.1-Linux-x86_64.tar.gz && \
+    cp -r cmake**/bin/* /usr/local/bin/ && cp -r cmake**/man/* /usr/local/man/ && \
+    cp -r cmake**/share/* /usr/local/share/ && rm -rf cmake*
+
 #  Minimalistic image library
 COPY external-deps/CImg_latest.zip .
 RUN unzip CImg_latest.zip && cp CImg-2.9.2_pre072920/CImg.h /usr/local/include && \
