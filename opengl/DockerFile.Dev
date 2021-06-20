@@ -1,0 +1,43 @@
+FROM base
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get -y update
+
+# wget
+RUN apt-get install wget
+
+# unzip
+RUN apt-get install unzip 
+
+#Git
+RUn apt-get install -y  git-all
+
+# GDB 
+RUN apt-get -y install gdb
+
+# LLVM/Clang
+RUN wget https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
+RUN tar xvf clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04.tar.xz
+RUN cp -r clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04/include/* /usr/include/
+RUN cp -r clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04/bin/* /usr/bin/
+RUN cp -r clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04/lib/* /usr/lib/
+RUN mkdir -p /usr/libexec/ && cp -r clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04/libexec/* /usr/libexec/
+RUN cp -r clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04/share/* /usr/share/
+RUN rm -rf clang+llvm-12.0.0-x86_64-linux-gnu-ubuntu-20.04/
+
+# Set Clang as the default compiler, cmake can take it from here
+RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 30
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 30
+RUN rm /usr/bin/ld && ln -s /usr/bin/ld.lld /usr/bin/ld
+
+
+#Cmake
+COPY external-deps/cmake-3.18.1-Linux-x86_64.tar.gz .
+RUN tar -xvf cmake-3.18.1-Linux-x86_64.tar.gz && rm cmake-3.18.1-Linux-x86_64.tar.gz && \
+    cp -r cmake**/bin/* /usr/local/bin/ && cp -r cmake**/man/* /usr/local/man/ && \
+    cp -r cmake**/share/* /usr/local/share/ && rm -rf cmake*
+
+
+
+

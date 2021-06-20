@@ -1,0 +1,6 @@
+FROM nvcr.io/nvidia/cudagl:11.2.1-base-ubuntu16.04
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,video,utility,graphics,compat32,display
+
+COPY bash.bashrc /etc/bash.bashrc
+RUN  chmod a+rwx /etc/bash.bashrc
