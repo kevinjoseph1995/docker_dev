@@ -31,4 +31,17 @@ RUN tar -xvf cmake-3.18.1-Linux-x86_64.tar.gz && rm cmake-3.18.1-Linux-x86_64.ta
 RUN ls /usr/bin/
 RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 30
 RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 30
-RUN rm /usr/bin/ld && ln -s /usr/bin/ld.lld /usr/bin/ld
+RUN rm /usr/bin/ld && ln -s /usr/bin/ld.lld-12 /usr/bin/ld
+
+RUN apt install clang-format
+
+# GLAD 
+COPY external-deps/glad.zip .
+RUN unzip glad.zip
+RUN cp -r include/* /usr/include/
+RUN cp -r src/* /usr/src/
+
+# GLFW
+RUN apt-get install -y libglfw3
+RUN apt-get install -y libglfw3-dev
+
