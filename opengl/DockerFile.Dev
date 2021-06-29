@@ -33,13 +33,7 @@ RUN update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 30
 RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 30
 RUN rm /usr/bin/ld && ln -s /usr/bin/ld.lld-12 /usr/bin/ld
 
-RUN apt install clang-format
-
-# GLAD 
-COPY external-deps/glad.zip .
-RUN unzip glad.zip
-RUN cp -r include/* /usr/include/
-RUN cp -r src/* /usr/src/
+RUN apt install -y clang-format
 
 # GLFW
 RUN apt-get install -y libglfw3
